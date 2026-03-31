@@ -1,3 +1,4 @@
+import Header from "./components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
@@ -23,7 +24,10 @@ export default function RootLayout({
       lang="vi"
       className={`${beVietnamPro.variable} h-full antialiased`}
     >
-      <body className={`${beVietnamPro.className} min-h-full flex flex-col`}>{children}</body>
+      <body className={`${beVietnamPro.className} min-h-full flex flex-col`}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

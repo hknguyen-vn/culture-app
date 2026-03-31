@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Header from '../components/Header';
 import { Target, ShieldCheck, Zap, ArrowRight, BookOpen } from 'lucide-react';
 
 export default function ValuesPage() {
@@ -53,7 +52,6 @@ export default function ValuesPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans">
-      <Header />
 
       <main className="max-w-[1200px] mx-auto px-6 py-20 divide-y divide-slate-100">
         {/* HERO SECTION */}

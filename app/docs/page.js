@@ -109,15 +109,15 @@ export default function DocsPage() {
                   <div className={`flex-1 h-0 border-t-2 ${step.dashed ? 'border-dashed border-slate-300' : 'border-brand-red'} relative`}>
                     <div className={`absolute -right-1 -top-[7px] border-t-[7px] border-b-[7px] border-l-[10px] border-t-transparent border-b-transparent ${step.dashed ? 'border-l-slate-300' : 'border-l-brand-red'}`} />
 
-                    {/* Label Above/Below based on position to avoid clashing */}
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-max text-center ${idx % 2 === 0 ? '-top-14' : '-top-14'}`}>
-                      <div className="flex items-center justify-center gap-2 mb-1">
+                    {/* Label Above based on position to avoid clashing with arrows */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-max text-center -top-20`}>
+                      <div className="flex items-center justify-center gap-2 mb-2">
                         <span className={`p-1.5 rounded-lg ${step.dashed ? 'bg-slate-100 text-slate-400' : 'bg-brand-red/5 text-brand-red shadow-sm'}`}>
                           {step.icon}
                         </span>
-                        <span className="text-[12px] font-black text-slate-900 tracking-tight">{step.label}</span>
+                        <span className="text-[13px] font-black text-slate-900 tracking-tight uppercase">{step.label}</span>
                       </div>
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest bg-white/70 px-2 py-0.5 rounded-full inline-block border border-slate-100/50">{step.desc}</p>
+                      <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-2 py-0.5 rounded-full inline-block border border-slate-200 bg-white shadow-sm">{step.desc}</p>
                     </div>
                   </div>
                 </div>
