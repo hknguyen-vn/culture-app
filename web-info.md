@@ -1,33 +1,48 @@
-# HGPT Steel Core Value - Thông tin Dự án
+# HGPT Steel Culture Board - Tài liệu Dự án hoàn chỉnh (2026)
 
-Tài liệu này tổng hợp các công nghệ lõi và các tính năng chính của dự án **Bảng tin Văn hóa HGPT Steel** đã được xây dựng và tối ưu hoàn chỉnh.
+Tài liệu này tổng hợp toàn bộ các công nghệ, kiến trúc và tính năng cao cấp của dự án **Bảng tin Văn hóa HGPT Steel**. Ứng dụng được thiết kế theo phong cách "Smart Industrial Minimalist", tối ưu cho cả vận hành nội bộ và trải nghiệm di động.
 
-## 1. Công nghệ & Framework Lõi (Tech Stack)
+---
 
-*   **Next.js 16 (App Router):** Framework React mạnh mẽ cung cấp kiến trúc Hybrid (Server & Client Components), xử lý Server Actions và định tuyến API nội bộ.
-*   **React 18+:** Xây dựng giao diện tương tác tức thì với các Hooks nâng cao (`useState`, `useEffect`, `useMemo`).
-*   **Tailwind CSS:** Hệ thống CSS Utility-first giúp xây dựng nhanh giao diện "Industrial-Tech", chuyên nghiệp, tối ưu Dark/Light Mode và tương thích mọi kích thước màn hình (Responsive Design).
-*   **Google Sheets API (`google-spreadsheet`):** Hoạt động như một cơ sở dữ liệu (Database) thời gian thực, lưu trữ toàn bộ nội dung bài viết và lượt thả tim siêu gọn nhẹ, dễ quản lý.
-*   **Google Gemini AI (`@google/genai`):** Trái tim của hệ thống. Sử dụng model **Gemini 3.1 Flash-Lite** để tự động biên tập, phân tích và viết lại câu chuyện thô của nhân viên thành một bài đăng văn hóa chuyên nghiệp, có cấu trúc.
-*   **Lucide React:** Bộ thư viện Icon chuẩn mực, sắc nét dùng cho các thành phần UI.
+## 1. Công nghệ & Kiến trúc Lõi (Technical Stack)
 
-## 2. Các Tính năng Chính đã Phát triển (Key Features)
+*   **Next.js 16 (App Router) & React 19:** Sử dụng những phiên bản mới nhất nhằm tối ưu hóa hiệu năng Server Components và cơ chế Streaming UI.
+*   **Google Sheets Cloud Database:** Sử dụng Google Sheets làm cơ sở dữ liệu thời gian thực thông qua thư viện `google-spreadsheet`. Giải pháp này giúp đội ngũ quản lý có thể trực tiếp theo dõi và chỉnh sửa dữ liệu mà không cần thông qua hệ thống quản trị (CMS) phức tạp.
+*   **Gemini AI Engine (Model 1.5 Flash-Lite):** Được tích hợp sâu vào hệ thống để tự động hóa việc tóm lược ý tưởng thô của nhân viên thành các bản tin ngắn gọn, súc tích và bám sát các giá trị cốt lõi.
+*   **React Portals Architecture:** Toàn bộ hệ thống Modal (Form nhập liệu, Chi tiết câu chuyện) được triển khai qua cơ chế Portal (`createPortal`) để đảm bảo quản lý lớp hiển thị (Z-index) tuyệt đối, không bị xung đột với các thành phần sticky (Header/Filter).
+*   **Responsive Hybrid Design:** Kết hợp giữa Tailwind CSS và các cấu trúc linh hoạt để đảm bảo ứng dụng đẹp mắt trên màn hình Desktop siêu rộng và mượt mà trên smartphone màn hình nhỏ.
 
-*   **AI Story Forge (Form Tạo Cốt truyện với AI):** 
-    *   Form nhập liệu cao cấp (High-Prestige UI) yêu cầu đầy đủ Họ tên, Bộ phận và Giá trị cốt lõi.
-    *   Tích hợp trực tiếp hệ thống Prompt System của doanh nghiệp. Nút "TỔNG HỢP CÂU CHUYỆN VỚI AI" sẽ gửi data thô cho Gemini để viết lại thành văn bản chuyên nghiệp trước khi đăng.
-*   **Live Culture Feed (Bảng tin Văn hóa Mượt mà):**
-    *   Hiển thị dạng lưới thẻ (Grid Cards) với các thông tin chi tiết: Tên, Phòng ban, Giá trị cốt lõi (Tag) và nội dung.
-    *   Thuật toán tính toán thời gian động (Relative Time) thông minh: *Vừa xong, 5 phút trước, 2 giờ trước...*
-*   **Hệ thống Tương tác (Like/Thả tim):**
-    *   Cho phép người dùng thả tim các nội dung hay. 
-    *   Giao diện phản hồi ngay lập tức (Optimistic UI) và đồng bộ/lưu trữ Background trực tiếp xuống cột `likes` trong Google Sheets.
-*   **Dashboard Thống kê Thời gian thực:**
-    *   Panel trên cùng hiển thị tổng quan: Tổng số lượng bài viết (Câu chuyện Văn hóa) và **Tổng lượt Tương tác** (Cộng dồn tất cả các lượt thả tim của toàn hệ thống).
-*   **Bộ lọc Đa luồng (Multi-Filter System):**
-    *   Thanh Filter Sticky điều hướng nhanh với 2 chế độ lọc chéo: Theo Thời gian (Hôm nay, Tuần này, Tháng này) và Theo Giá trị cốt lõi.
-*   **Tối ưu hóa Giao diện Di động (Mobile-First & Touch Config):**
-    *   Giao diện tương thích hoàn hảo thiết bị di động.
-    *   Tăng hit-area cho nút, sử dụng `touch-action: manipulation`, sửa lỗi xếp lớp z-index chống chập chờn khi vuốt ngang (iOS/Android Safari Support).
-*   **Bảo mật & Máy chủ Cục bộ (LAN Hosting):**
-    *   Tùy chỉnh chặn/mở Cross-Origin của `next.config.ts` cho phép ứng dụng vượt màng lọc bảo mật của Next 16 để chạy mượt mà trên thiết bị di động dùng chung mạng nội bộ WiFi (192.168.x.x).
+---
+
+## 2. Các Tính năng & Cải tiến nổi bật (Key Features)
+
+### A. Hệ thống Thống kê & Vinh danh (High-Prestige Dashboard)
+*   **Thẻ Thống kê cao cấp:** Sử dụng cặp icon **BookOpen** và **Heart** (đổ màu rực rỡ) để hiển thị Tổng số bài viết và Tổng lượt tương tác toàn hệ thống.
+*   **Bảng Xếp hạng Tương tác (Top Trending):** Tự động tổng hợp và hiển thị 5 câu chuyện nhận được nhiều sự quan tâm nhất. Đặc biệt, người dùng có thể click trực tiếp vào từng bài trong bảng xếp hạng để mở xem chi tiết ngay lập tức.
+
+### B. AI Story Forge (Bộ máy Sáng tạo nội bộ)
+*   **AI Rewrite System:** Chuyển đổi dữ liệu thô (ý chính) thành bản tin 2 đoạn chuyên nghiệp (Đoạn 1: Hành động thực tế; Đoạn 2: Thông điệp văn hóa).
+*   **Kiểm soát chất lượng (Tech Polish):**
+    *   Bộ đếm từ thời gian thực với giới hạn 500 từ để đảm bảo API hoạt động ổn định.
+    *   Cấu trúc Prompt AI chặt chẽ: Độ dài kết quả tối đa 90 từ, ngôn từ báo cáo, không dùng từ khen sáo rỗng.
+    *   Trạng thái loading tinh tế tích hợp ngay trong nút bấm ("Hệ thống đang suy nghĩ...").
+
+### C. Trải nghiệm Người dùng (UX/UI Excellence)
+*   **Global Navigation Header:** Thanh menu được đưa vào cấu trúc gốc (`layout.tsx`), tích hợp logo HGPT và avatar Smiley thân thiện trên mọi trang.
+*   **Mobile Hamburger Menu:** Hệ thống menu di động dạng ngăn kéo (drawer) mượt mà, giúp chuyển đổi nhanh chóng giữa Home, Hướng dẫn và Core Values trên điện thoại.
+*   **Vertical Industrial Timeline (Docs):** Sơ đồ quy trình được thiết kế lại hoàn toàn theo dạng Timeline dọc với các thẻ (cards) đánh số hiện đại, giúp hiển thị hoàn hảo trên smartphone mà không bị dồn chữ.
+*   **Avatar Smile System:** Thay thế các chữ cái viết tắt khô khan bằng biểu tượng mặt cười thân thiện (`Smile` icon) xuyên suốt từ Header, Timeline đến Modal.
+
+### D. Hệ thống Lọc & Tìm kiếm
+*   **Dynamic Multi-Filter:** Bộ lọc kép linh hoạt giúp nhân viên dễ dàng tìm kiếm câu chuyện theo thời gian (Hôm nay, Tuần này, Tháng này) hoặc lọc theo từng Giá trị cốt lõi cụ thể của HGPT.
+
+---
+
+## 3. Vận hành & Triển khai (Deployment)
+
+*   **LAN Support:** Cấu hình `allowedDevOrigins` trong `next.config.ts` cho phép truy cập ứng dụng qua IP mạng nội bộ (192.168.x.x) từ điện thoại cá nhân.
+*   **Bảo mật:** File `.env.local` được quản lý chặt chẽ để bảo vệ Google Private Key và Gemini API Key.
+*   **Build Optimization:** Dự án đã vượt qua bài kiểm tra `npm run build` với hiệu suất tĩnh (Static Prerender) cao nhất cho các trang tài liệu.
+
+---
+**Dự án được xây dựng bởi đội ngũ HGPT Steel - Kiến tạo Văn hóa dựa trên Năng lực và Sự chính trực.**
