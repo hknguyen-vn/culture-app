@@ -1,139 +1,122 @@
 'use client'
-import { User, Cpu, ClipboardCheck, LayoutGrid, CheckCircle2, MessageSquare, Zap, ShieldCheck, Globe } from 'lucide-react';
+import { User, Cpu, ClipboardCheck, LayoutGrid, CheckCircle2, MessageSquare, Zap, ShieldCheck, Globe, ArrowDown } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DocsPage() {
-  const interactions = [
+  const steps = [
     {
-      from: 'THÀNH VIÊN',
-      to: 'AI ASSIST',
-      label: 'Nhập 5-7 ý chính',
-      desc: 'Nội dung thực tế thô',
-      icon: <MessageSquare size={16} />
+      role: 'THÀNH VIÊN',
+      action: 'Nhập 5-7 ý chính',
+      detail: 'Mô tả thực tế các sự kiện, công việc thô đã diễn ra tại hiện trường hoặc văn phòng.',
+      icon: <MessageSquare size={20} />,
+      color: 'text-slate-600',
+      bgColor: 'bg-slate-50',
+      to: 'AI ASSIST'
     },
     {
-      from: 'AI ASSIST',
-      to: 'NGƯỜI CUNG CẤP',
-      label: 'Bản thảo & Phân loại',
-      desc: 'AI gán Giá trị cốt lõi',
-      icon: <Zap size={16} />,
-      dashed: true
+      role: 'AI ASSIST',
+      action: 'Biên tập & Gợi ý',
+      detail: 'AI tự động phân tích hành động để gán Giá trị cốt lõi phù hợp và viết lại súc tích.',
+      icon: <Zap size={20} />,
+      color: 'text-brand-red',
+      bgColor: 'bg-red-50',
+      to: 'NGƯỜI CUNG CẤP'
     },
     {
-      from: 'NGƯỜI CUNG CẤP',
-      to: 'BẢNG TIN',
-      label: 'Kiểm tra & Đăng bài',
-      desc: 'Xác thực & Lan tỏa',
-      icon: <ShieldCheck size={16} />
+      role: 'NGƯỜI CUNG CẤP',
+      action: 'Kiểm tra & Xuất bản',
+      detail: 'Xem lại nội dung lần cuối để đảm bảo tính xác thực trước khi chia sẻ lên bảng tin chung.',
+      icon: <ShieldCheck size={20} />,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
+      to: 'BẢNG TIN'
     }
   ];
 
-  const actors = [
-    { name: 'THÀNH VIÊN', icon: <User size={20} /> },
-    { name: 'AI ASSIST', icon: <Cpu size={20} /> },
-    { name: 'NGƯỜI CUNG CẤP', icon: <ClipboardCheck size={20} /> },
-    { name: 'BẢNG TIN', icon: <LayoutGrid size={20} /> }
-  ];
-
   return (
-    <main className="h-[calc(100vh-80px)] bg-white overflow-hidden flex flex-col">
-      {/* COMPACT HEADER SECTION */}
-      <section className="pt-10 pb-8 px-6 text-center flex-none">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4">
-          <Globe size={10} className="text-brand-red" />
-          HGPT Steel Culture System
+    <main className="min-h-screen bg-white flex flex-col font-sans">
+      {/* HEADER */}
+      <section className="pt-16 pb-12 px-6 text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">
+          <Globe size={12} className="text-brand-red" />
+          HGPT Steel Culture Guidelines
         </div>
-        <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none mb-4 uppercase">
-          Quy trình vận hành
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-6 uppercase">
+          Quy trình chia sẻ câu chuyện
         </h1>
-        
-        {/* FAST CTA AT TOP */}
-        <div className="flex justify-center mt-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-3 bg-slate-900 border border-slate-800 text-white px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-brand-red hover:border-brand-red transition-all shadow-xl shadow-slate-200 active:scale-95 group"
-          >
-            <CheckCircle2 size={18} className="group-hover:rotate-12 transition-transform" />
-            Bắt đầu chia sẻ câu chuyện
-          </Link>
-        </div>
+        <p className="text-slate-500 max-w-xl mx-auto text-sm font-medium leading-relaxed">
+          Ứng dụng sức mạnh của AI để ghi nhận và lan tỏa những giá trị cốt lõi từ thực tế sản xuất hàng ngày.
+        </p>
       </section>
 
-      {/* SEQUENCE DIAGRAM CONTAINER (Fit to remaining space) */}
-      <section className="flex-1 max-w-6xl w-full mx-auto px-6 pb-6">
-        <div className="h-full bg-slate-50/50 border border-slate-100 rounded-[3rem] p-8 md:p-12 relative overflow-hidden flex flex-col">
-          
-          <div className="text-center mb-10 flex-none">
-             <h2 className="text-[9px] font-black tracking-[0.3em] text-slate-300 uppercase">Interactive Flow Diagram</h2>
-          </div>
-
-          {/* ACTORS HEADER */}
-          <div className="flex justify-between items-start relative z-20 mb-12 flex-none">
-            {actors.map((actor, idx) => (
-              <div key={idx} className="flex flex-col items-center gap-3 w-1/4">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white border-2 border-slate-50 shadow-sm flex items-center justify-center text-slate-600 transition-all group">
-                  <div className="group-hover:text-brand-red transition-colors md:scale-110">
-                    {actor.icon}
-                  </div>
-                </div>
-                <span className="text-[9px] md:text-[10px] font-black tracking-[0.2em] text-slate-400 text-center uppercase whitespace-nowrap">
-                  {actor.name}
+      {/* MOBILE-FIRST VERTICAL FLOW */}
+      <section className="flex-1 max-w-2xl w-full mx-auto px-6 pb-20">
+        <div className="space-y-4">
+          {steps.map((step, idx) => (
+            <div key={idx}>
+              {/* STEP CARD */}
+              <div className="bg-white border-2 border-slate-50 rounded-[2.5rem] p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                {/* DECORATIVE STEP NUMBER */}
+                <span className="absolute -top-4 -right-4 text-8xl font-black text-slate-50/50 group-hover:text-slate-100/50 transition-colors">
+                  0{idx + 1}
                 </span>
-              </div>
-            ))}
-          </div>
 
-          {/* DIAGRAM FLOW AREA (Flexible) */}
-          <div className="relative flex-1">
-            {/* VERTICAL LIFE-LINES */}
-            <div className="absolute inset-0 flex justify-between pointer-events-none px-[12.5%]">
-              {actors.map((_, i) => (
-                <div key={i} className="w-px h-full flex flex-col items-center">
-                  <div className="w-px h-full border-l-2 border-dashed border-slate-200" />
-                </div>
-              ))}
-            </div>
-
-            {/* INTERACTION MESSAGES (Arrows) */}
-            <div className="relative z-10 pt-10 flex flex-col h-full justify-around px-[12.5%]">
-              {interactions.map((step, idx) => (
-                <div
-                  key={idx}
-                  className="relative flex items-center"
-                  style={{
-                    marginLeft: `${idx * 25}%`,
-                    width: '25%'
-                  }}
-                >
-                  {/* Arrow Line */}
-                  <div className={`flex-1 h-0 border-t-2 ${step.dashed ? 'border-dashed border-slate-300' : 'border-brand-red'} relative`}>
-                    <div className={`absolute -right-1 -top-[7px] border-t-[7px] border-b-[7px] border-l-[10px] border-t-transparent border-b-transparent ${step.dashed ? 'border-l-slate-300' : 'border-l-brand-red'}`} />
-
-                    {/* Label Above based on position to avoid clashing with arrows */}
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-max text-center -top-20`}>
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className={`p-1.5 rounded-lg ${step.dashed ? 'bg-slate-100 text-slate-400' : 'bg-brand-red/5 text-brand-red shadow-sm'}`}>
-                          {step.icon}
-                        </span>
-                        <span className="text-[13px] font-black text-slate-900 tracking-tight uppercase">{step.label}</span>
+                <div className="relative z-10 space-y-6">
+                  {/* ACTOR & TARGET */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl ${step.bgColor} ${step.color} flex items-center justify-center shadow-sm`}>
+                        {step.icon}
                       </div>
-                      <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-2 py-0.5 rounded-full inline-block border border-slate-200 bg-white shadow-sm">{step.desc}</p>
+                      <span className="text-[11px] font-black tracking-widest text-slate-400 uppercase">{step.role}</span>
+                    </div>
+                    {idx < steps.length && (
+                      <div className="flex items-center gap-2 pr-2">
+                        <span className="text-[9px] font-bold text-slate-300 uppercase italic">Chuyển đến</span>
+                        <span className="text-[9px] font-black text-slate-900 uppercase tracking-tight">{step.to}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ACTION TITLE */}
+                  <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight leading-none">
+                    {step.action}
+                  </h3>
+
+                  {/* DETAIL TEXT */}
+                  <p className="text-slate-500 text-sm font-medium leading-relaxed pr-8">
+                    {step.detail}
+                  </p>
+                </div>
+              </div>
+
+              {/* CONNECTING ARROW */}
+              {idx < steps.length - 1 && (
+                <div className="flex justify-center py-4">
+                  <div className="h-12 w-px border-l-2 border-dashed border-slate-200 relative">
+                    <div className="absolute -bottom-1 -left-[5px]">
+                      <ArrowDown size={10} className="text-slate-300" />
                     </div>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* DECORATIVE ELEMENTS */}
-          <div className="absolute bottom-0 right-0 p-8 text-slate-100 pointer-events-none opacity-30">
-            <LayoutGrid size={180} strokeWidth={0.5} />
-          </div>
+        {/* FINAL CTA */}
+        <div className="mt-16 text-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-4 bg-slate-900 border border-slate-800 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-brand-red hover:border-brand-red transition-all shadow-xl shadow-slate-200 active:scale-95 group w-full sm:w-auto justify-center"
+          >
+            <CheckCircle2 size={18} className="group-hover:rotate-12 transition-transform" />
+            BẮT ĐẦU NGAY BÂY GIỜ
+          </Link>
           
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex-none">
-            <p className="text-[9px] font-black text-slate-200 uppercase tracking-[0.5em] whitespace-nowrap">
-              HGPT STEEL • INTERNAL CULTURE • 2026
-            </p>
+          <div className="mt-8 flex items-center justify-center gap-2">
+            <LayoutGrid size={14} className="text-brand-red" />
+            <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.5em]">HGPT STEEL • INTERNAL CULTURE • 2026</span>
           </div>
         </div>
       </section>
