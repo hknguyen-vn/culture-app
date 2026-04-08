@@ -23,6 +23,7 @@ export default function RootLayout({
     <html
       lang="vi"
       className={`${beVietnamPro.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className={`${beVietnamPro.className} min-h-full flex flex-col`}>
         <Header />
