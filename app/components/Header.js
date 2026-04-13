@@ -40,7 +40,7 @@ export default function Header() {
     };
     if (isFormOpen || isMenuOpen) {
       window.addEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'hidden'; 
+      document.body.style.overflow = 'hidden';
     }
     return () => {
       window.removeEventListener('keydown', handleEsc);
@@ -57,7 +57,7 @@ export default function Header() {
           <X size={24} />
         </button>
       </div>
-      
+
       <nav className="flex flex-col gap-8">
         {[
           { name: 'HOME', href: '/' },
@@ -102,7 +102,7 @@ export default function Header() {
     >
       <div
         className="bg-white w-full max-w-3xl mx-auto rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative animate-in zoom-in-95 duration-200"
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="absolute top-9 right-8 z-[125]">
           <button
@@ -120,8 +120,8 @@ export default function Header() {
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mt-3">HGPT Steel • AI Assisted</p>
             </div>
           </div>
-          <StoryForm 
-            onSuccess={() => closeModal(true)} 
+          <StoryForm
+            onSuccess={() => closeModal(true)}
             onDirtyChange={setIsFormDirty}
           />
         </div>
@@ -136,7 +136,7 @@ export default function Header() {
         <div className="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* MOBILE MENU TRIGGER */}
-            <button 
+            <button
               onClick={() => setIsMenuOpen(true)}
               className="md:hidden p-2.5 bg-slate-100 rounded-xl text-slate-500 active:scale-90 transition-transform"
             >
@@ -144,7 +144,7 @@ export default function Header() {
             </button>
 
             <Link href="/" className="flex items-center gap-2 group cursor-pointer ml-1 md:ml-0">
-              <img src="/hgptsteel.png" alt="HGPT STEEL" className="h-[28px] md:h-8 w-auto object-contain" />
+              <img src="/hgptsteel.png" alt="HGPT STEEL" className="h-[28px] md:h-12 w-auto object-contain" />
             </Link>
             <nav className="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest ml-4">
               <Link
