@@ -1,81 +1,98 @@
-'use client'
-import { useState } from 'react';
-import { Trophy, TrendingUp, Heart } from 'lucide-react';
-import StoryDetailModal from './StoryDetailModal';
+import { Award, TrendingUp, Trophy, Star } from 'lucide-react';
+import LikeButton from './LikeButton';
 
-export default function RankingBoard({ stories = [] }) {
-  const [selectedStory, setSelectedStory] = useState(null);
-
-  const topStories = [...stories]
+export default function RankingBoard({ stories }) {
+  // Logic to calculate top stories
+  const rankedStories = [...(stories || [])]
     .sort((a, b) => (b.likes || 0) - (a.likes || 0))
     .slice(0, 5);
 
+  const getRankColor = (index) => {
+    switch (index) {
+      case 0: return 'text-amber-500 bg-amber-50 border-amber-200'; // Gold
+      case 1: return 'text-slate-400 bg-slate-50 border-slate-200'; // Silver
+      case 2: return 'text-orange-600 bg-orange-50 border-orange-200'; // Bronze
+      default: return 'text-slate-400 bg-slate-50 border-slate-100';
+    }
+  };
+
+  const getRankIcon = (index) => {
+    switch (index) {
+      case 0: return <Trophy size={18} className="drop-shadow-sm" />;
+      case 1: return <Award size={18} />;
+      case 2: return <Award size={18} />;
+      default: return <span className="font-black text-sm">{index + 1}</span>;
+    }
+  };
+
   return (
-    <div className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden sticky top-24">
-      <div className="p-6 border-b border-slate-50 bg-slate-50/50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100">
-            <Trophy size={18} className="text-brand-red fill-current opacity-20" />
-            <Trophy size={18} className="text-brand-red absolute" />
-          </div>
-          <div>
-            <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest">Bảng Xếp Hạng</h3>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Top Tương Tác</p>
-          </div>
+    <div className="bg-white rounded-[2rem] p-6 lg:p-8 border border-slate-200/60 shadow-sm sticky top-[160px]">
+      <div className="flex items-center gap-3 mb-8 pb-6 border-b border-slate-100">
+        <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500">
+          <TrendingUp size={24} />
+        </div>
+        <div>
+          <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest">Top Tương tác</h3>
+          <p className="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] mt-1">Tuần này</p>
         </div>
       </div>
 
-      <div className="p-2">
-        {topStories.map((story, index) => (
-          <div
-            key={story.id}
-            onClick={() => setSelectedStory(story)}
-            className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-all group cursor-pointer"
-          >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 ${index === 0 ? 'bg-amber-100 text-amber-600' :
-                index === 1 ? 'bg-slate-100 text-slate-500' :
-                  index === 2 ? 'bg-orange-50 text-orange-600/70' :
-                    'bg-slate-50 text-slate-400'
-              }`}>
-              {index + 1}
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <h4 className="text-[13px] font-bold text-slate-800 truncate group-hover:text-brand-red transition-colors">
-                {story.title}
-              </h4>
-              <div className="flex items-center gap-3 mt-1">
-                <p className="text-[10px] font-medium text-slate-400 truncate">
-                  {story.employee_name || 'Ẩn danh'}
-                </p>
-                <div className="flex items-center gap-1 text-[10px] font-bold text-rose-500 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100/50">
-                  <Heart size={8} className="fill-current" />
-                  {story.likes || 0}
+      <div className="space-y-6">
+        {rankedStories.length > 0 ? (
+          rankedStories.map((story, index) => (
+            <div key={story.id || index} className="group relative">
+              <div className="flex gap-4">
+                <div className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center border shadow-sm ${getRankColor(index)}`}>
+                  {getRankIcon(index)}
+                </div>
+                
+                <div className="flex-1 min-w-0 pt-0.5">
+                  <p className="text-sm font-bold text-slate-900 leading-tight mb-2 line-clamp-2 pr-4">
+                    {story.title}
+                  </p>
+                  
+                   <div className="flex items-center justify-between">
+                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest truncate max-w-[120px]">
+                       {story.employee_name || 'Ẩn danh'}
+                     </p>
+                     
+                     <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                       <HeartIcon filled />
+                       <span className="text-[10px] font-bold text-rose-600">{story.likes || 0}</span>
+                     </div>
+                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-
-        {topStories.length === 0 && (
-          <div className="py-10 text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-            Chưa có dữ liệu xếp hạng
+          ))
+        ) : (
+          <div className="text-center py-10 bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
+            <Star size={24} className="text-slate-300 mx-auto mb-3" />
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Chưa có dữ liệu</p>
           </div>
         )}
       </div>
 
-      <div className="p-5 bg-slate-50/30 border-t border-slate-50 text-center">
-        <div className="flex items-center justify-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
-          <TrendingUp size={12} /> Cập nhật
-        </div>
-      </div>
-
-      {/* Detail Modal */}
-      <StoryDetailModal 
-        story={selectedStory} 
-        isOpen={!!selectedStory} 
-        onClose={() => setSelectedStory(null)} 
-      />
+      <button className="w-full mt-8 py-3.5 bg-slate-50 hover:bg-slate-100 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] rounded-xl transition-colors border border-slate-200/60">
+        Xem tất cả
+      </button>
     </div>
+  );
+}
+
+function HeartIcon({ filled }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`w-3 h-3 ${filled ? 'text-rose-500' : 'text-slate-400'}`}
+    >
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+    </svg>
   );
 }

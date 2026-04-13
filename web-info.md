@@ -21,10 +21,12 @@ Tài liệu này tổng hợp toàn bộ các công nghệ, kiến trúc và tí
 *   **Bảng Xếp hạng Tương tác (Top Trending):** Tự động tổng hợp và hiển thị 5 câu chuyện nhận được nhiều sự quan tâm nhất. Đặc biệt, người dùng có thể click trực tiếp vào từng bài trong bảng xếp hạng để mở xem chi tiết ngay lập tức.
 
 ### B. AI Story Forge (Bộ máy Sáng tạo nội bộ)
-*   **AI Rewrite System:** Chuyển đổi dữ liệu thô (ý chính) thành bản tin 2 đoạn chuyên nghiệp (Đoạn 1: Hành động thực tế; Đoạn 2: Thông điệp văn hóa).
+*   **Manual Post Mode:** Cho phép người dùng trực tiếp đăng bài đã chỉnh sửa mà không cần qua AI xử lý.
+*   **AI Rewrite System:** Chuyển đổi dữ liệu thô thành bản tin 2 đoạn chuyên nghiệp.
+*   **AI Summarize System:** Tóm lược câu chuyện dài (tối đa 400 từ) thành bản tin 150 từ.
 *   **Kiểm soát chất lượng (Tech Polish):**
-    *   Bộ đếm từ thời gian thực với giới hạn 500 từ để đảm bảo API hoạt động ổn định.
-    *   Cấu trúc Prompt AI chặt chẽ: Độ dài kết quả tối đa 90 từ, ngôn từ báo cáo, không dùng từ khen sáo rỗng.
+    *   Bộ đếm từ linh hoạt: Tối đa 500 từ cho Manual, 250 từ cho Rewrite và 400 từ cho Summarize.
+    *   Cấu trúc Prompt AI chặt chẽ: Độ dài kết quả tối đa 90 từ (Rewrite) hoặc 150 từ (Summarize), ngôn từ báo cáo, không dùng từ khen sáo rỗng.
     *   Trạng thái loading tinh tế tích hợp ngay trong nút bấm ("Hệ thống đang suy nghĩ...").
 
 ### C. Trải nghiệm Người dùng (UX/UI Excellence)

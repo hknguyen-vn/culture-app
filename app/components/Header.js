@@ -9,6 +9,7 @@ import StoryForm from './StoryForm';
 export default function Header() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isFormDirty, setIsFormDirty] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
@@ -16,9 +17,14 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  const closeModal = useCallback(() => {
+  const closeModal = useCallback((force = false) => {
+    if (!force && isFormDirty) {
+      const confirmed = window.confirm('Bạn có nội dung chưa lưu. Chắc chắn muốn đóng?');
+      if (!confirmed) return;
+    }
     setIsFormOpen(false);
-  }, []);
+    setIsFormDirty(false); // Reset dirty state on close
+  }, [isFormDirty]);
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
@@ -79,7 +85,20 @@ export default function Header() {
   const modalContent = isFormOpen && mounted && createPortal(
     <div
       className="fixed inset-0 z-[9999] overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-300 py-10 px-4"
-      onClick={closeModal} 
+      onMouseDown={(e) => {
+        // Prevent closing if the click started inside the modal
+        if (e.target === e.currentTarget) {
+          e.currentTarget.dataset.overlayClickStarted = "true";
+        } else {
+          e.currentTarget.dataset.overlayClickStarted = "false";
+        }
+      }}
+      onMouseUp={(e) => {
+        // Only close if both mousedown and mouseup were on the overlay
+        if (e.target === e.currentTarget && e.currentTarget.dataset.overlayClickStarted === "true") {
+          closeModal();
+        }
+      }}
     >
       <div
         className="bg-white w-full max-w-3xl mx-auto rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative animate-in zoom-in-95 duration-200"
@@ -101,7 +120,10 @@ export default function Header() {
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mt-3">HGPT Steel • AI Assisted</p>
             </div>
           </div>
-          <StoryForm onSuccess={closeModal} />
+          <StoryForm 
+            onSuccess={() => closeModal(true)} 
+            onDirtyChange={setIsFormDirty}
+          />
         </div>
       </div>
     </div>,

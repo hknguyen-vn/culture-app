@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import { ShieldCheck, Clock, X, Heart, User, Building, Quote, Smile } from 'lucide-react';
+import { MapPin, User, Quote, Clock, Award } from 'lucide-react';
 import LikeButton from './LikeButton';
-import StoryDetailModal from './StoryDetailModal';
+import { formatDistanceToNow } from 'date-fns';
+import { vi } from 'date-fns/locale';
 
-export default function StoryCard({ story, relativeTime }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function StoryCard({ story, onClick }) {
   const getTagColor = (val) => {
     switch (val) {
       case 'Nói sao làm vậy': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
@@ -18,60 +16,60 @@ export default function StoryCard({ story, relativeTime }) {
   const tagValue = story.core_values?.[0] || 'Văn hóa HGPT';
 
   return (
-    <div className="bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group flex flex-col h-full items-start text-left">
-      <div className="p-7 md:p-8 flex flex-col flex-1 w-full relative">
-        <div className="flex items-center justify-between mb-5">
-          <span className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-colors ${getTagColor(tagValue)}`}>
-            {tagValue.toUpperCase()}
-          </span>
-          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400">
-            <Clock size={12} /> {relativeTime}
-          </div>
-        </div>
-
-        <div 
-          className="cursor-pointer group/content flex-1 flex flex-col"
-          onClick={() => setIsOpen(true)}
-        >
-          <h3 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight leading-snug group-hover/content:text-brand-red transition-colors">
-            {story.title}
-          </h3>
-
-          <div className="relative flex-1">
-            <p className="text-slate-600 text-[15px] leading-relaxed line-clamp-4 mb-2">
-              {story.story_content}
-            </p>
-            <button 
-              className="text-brand-red text-[11px] font-black uppercase tracking-widest hover:underline flex items-center gap-1 mb-6"
-            >
-              Xem chi tiết...
-            </button>
-          </div>
-        </div>
-
-        <div className="pt-5 flex items-center justify-between mt-auto">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 border border-slate-100">
-              <Smile size={20} />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-slate-900">
-                {story.employee_name}
-              </p>
-              <p className="text-xs font-medium text-slate-500">
-                {story.department}
-              </p>
-            </div>
-          </div>
-          <LikeButton storyId={story.id} initialLikes={story.likes} isDark={false} />
-        </div>
+    <article 
+      onClick={() => onClick(story)}
+      className="group bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200/60 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden relative"
+    >
+      <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+        <Quote size={120} className="text-brand-red rotate-12" />
       </div>
 
-      <StoryDetailModal 
-        story={story} 
-        isOpen={isOpen} 
-        onClose={() => setIsOpen(false)} 
-      />
-    </div>
+      <div className="flex items-center gap-4 mb-6">
+        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase border ${getTagColor(tagValue)}`}>
+          {tagValue}
+        </span>
+        <div className="h-px flex-1 bg-slate-100" />
+        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+          <Clock size={12} />
+          {(() => {
+            if (!story.created_at) return 'Vừa xong';
+            const d = new Date(story.created_at);
+            if (isNaN(d.getTime())) return story.created_at; 
+            return formatDistanceToNow(d, { addSuffix: true, locale: vi });
+          })()}
+        </span>
+      </div>
+
+      <h3 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight tracking-tight mb-6 group-hover:text-brand-red transition-colors line-clamp-2">
+        {story.title}
+      </h3>
+
+      <div className="pl-6 border-l-2 border-slate-100 mb-8">
+        <p className="text-slate-500 text-lg leading-relaxed line-clamp-3 font-medium">
+          {story.story_content}
+        </p>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-slate-100">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 border border-slate-100">
+            <User size={18} />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-slate-900">{story.employee_name || 'Ẩn danh'}</p>
+            <p className="text-[11px] font-bold text-brand-red/70 uppercase tracking-widest">{story.department || 'Phòng ban'}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+          <LikeButton storyId={story.id} initialLikes={story.likes} isDark={false} />
+          
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
+            <Award size={14} className="text-amber-500" />
+            <span className="text-[10px] font-black text-slate-500 uppercase">Impact</span>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }

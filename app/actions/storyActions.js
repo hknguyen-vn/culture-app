@@ -34,9 +34,11 @@ export async function generateStoryPreview(formData) {
   const employeeName = formData.get('employeeName');
   const department = formData.get('department');
   const targetValue = formData.get('targetValue');
+  const mode = formData.get('mode') || 'rewrite';
 
   const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview", generationConfig: { responseMimeType: "application/json" } });
-  const prompt = `
+  
+  const rewritePrompt = `
 ${CONTEXT}
 
 INPUT:
@@ -68,6 +70,37 @@ RÀNG BUỘC FORMAT:
 OUTPUT (BẮT BUỘC JSON HỢP LỆ):
 {"title":"...","story_content":"..."}
 `;
+
+  const summarizePrompt = `
+${CONTEXT}
+
+INPUT:
+- Câu chuyện cần tóm tắt: ${rawInput}
+- Nhân viên: ${employeeName} - ${department}
+- Giá trị cốt lõi mục tiêu: ${targetValue}
+
+NHIỆM VỤ:
+Tóm tắt câu chuyện trên thành một nội dung ngắn gọn, súc tích.
+
+YÊU CẦU CHI TIẾT:
+1. Giữ lại các chi tiết quan trọng nhất về hành động và kết quả.
+2. Độ dài tối đa 150 từ.
+3. Cấu trúc: 
+   - Đoạn 1: Tóm tắt diễn biến chính của câu chuyện.
+   - Đoạn 2: Kết nối câu chuyện với giá trị cốt lõi "${targetValue}".
+4. TIÊU ĐỀ:
+   - Ngắn gọn, súc tích, phản ánh nội dung chính.
+   - Không dùng từ sáo rỗng.
+
+RÀNG BUỘC FORMAT:
+- story_content phải có 2 đoạn, cách nhau bằng "\\n".
+- Không thêm text ngoài JSON.
+
+OUTPUT (BẮT BUỘC JSON HỢP LỆ):
+{"title":"...","story_content":"..."}
+`;
+
+  const prompt = mode === 'summarize' ? summarizePrompt : rewritePrompt;
 
   const result = await model.generateContent(prompt);
   const aiResponse = JSON.parse(result.response.text().replace(/```json|```/g, ''));
