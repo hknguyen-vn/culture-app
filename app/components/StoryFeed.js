@@ -2,11 +2,13 @@
 import { useState, useMemo, useEffect } from 'react';
 import FilterBar from './FilterBar';
 import StoryCard from './StoryCard';
+import StoryDetailModal from './StoryDetailModal';
 
 export default function StoryFeed({ initialStories }) {
   const [timeFilter, setTimeFilter] = useState('all');
   const [tagFilter, setTagFilter] = useState('all');
   const [mounted, setMounted] = useState(false);
+  const [selectedStory, setSelectedStory] = useState(null);
 
   // Fix hydration mismatch by only calculating relative time on the client
   useEffect(() => {
@@ -72,11 +74,18 @@ export default function StoryFeed({ initialStories }) {
             <StoryCard 
               key={story.id || index} 
               story={story} 
+              onClick={setSelectedStory}
               relativeTime={getRelativeTime(story.createdAt)} 
             />
           ))}
         </div>
       )}
+
+      <StoryDetailModal 
+        story={selectedStory} 
+        isOpen={!!selectedStory} 
+        onClose={() => setSelectedStory(null)} 
+      />
     </div>
   );
 }

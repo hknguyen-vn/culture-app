@@ -17,7 +17,7 @@ export default function StoryCard({ story, onClick }) {
 
   return (
     <article 
-      onClick={() => onClick(story)}
+      onClick={() => onClick && onClick(story)}
       className="group bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200/60 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden relative"
     >
       <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
@@ -32,9 +32,9 @@ export default function StoryCard({ story, onClick }) {
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
           <Clock size={12} />
           {(() => {
-            if (!story.created_at) return 'Vừa xong';
-            const d = new Date(story.created_at);
-            if (isNaN(d.getTime())) return story.created_at; 
+            if (!story.createdAt) return 'Vừa xong';
+            const d = new Date(story.createdAt);
+            if (isNaN(d.getTime())) return story.createdAt; 
             return formatDistanceToNow(d, { addSuffix: true, locale: vi });
           })()}
         </span>

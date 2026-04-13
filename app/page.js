@@ -15,9 +15,9 @@ export default async function CultureBoard() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-l-4 border-brand-red pl-6 pb-2">
             <div>
               <p className="text-[10px] font-black text-brand-red uppercase tracking-[0.3em] mb-1">Bảng tin Văn hóa</p>
-              <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase leading-none">TIMELINE</h2>
+              <h2 className="text-2xl font-black text-slate-700 tracking-tight uppercase leading-none">TIMELINE</h2>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-200/60 shadow-sm">
                 <div className="w-8 h-8 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600">

@@ -59,11 +59,11 @@ export default function DocsPage() {
             <Layers size={14} className="text-slate-500" />
             <span className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em]">Cẩm nang tương tác</span>
           </div>
-          
+
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-[0.9]">
-            HƯỚNG DẪN <span className="text-brand-red">ĐĂNG BÀI</span>
+            HƯỚNG DẪN <span className="text-brand-red">CHIA SẺ CÂU CHUYỆN</span>
           </h1>
-          
+
           <p className="text-slate-500 max-w-2xl mx-auto text-lg font-medium">
             HGPT Steel Culture Board cung cấp 3 chế độ soạn thảo tối ưu hóa, đảm bảo mọi câu chuyện văn hóa đều được truyền tải rõ ràng, mạnh mẽ và chuyên nghiệp nhất.
           </p>
@@ -75,7 +75,7 @@ export default function DocsPage() {
         <div className="grid md:grid-cols-3 gap-6">
           {modes.map((mode) => (
             <div key={mode.id} className={`rounded-3xl p-8 border shadow-sm transition-all duration-300 group ${mode.color} ${mode.borderColor} hover:-translate-y-1 hover:shadow-xl`}>
-              
+
               <div className="flex justify-between items-start mb-6">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 group-hover:bg-white transition-colors">
                   {mode.icon}
@@ -89,7 +89,7 @@ export default function DocsPage() {
                 <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
                   {mode.title}
                 </h3>
-                
+
                 <p className="text-slate-600 text-sm leading-relaxed font-medium h-24">
                   {mode.description}
                 </p>
@@ -111,7 +111,7 @@ export default function DocsPage() {
 
       {/* WORKFLOW BOTTOM BAR */}
       <div className="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm mt-4">
-        
+
         <div className="flex items-center gap-4 md:gap-8 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
           <SimpleStep num="1" text="Soạn thảo" />
           <ArrowRight size={14} className="text-slate-200 shrink-0" />
